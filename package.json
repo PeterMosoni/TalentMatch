@@ -12,6 +12,7 @@
     "async": "1.5.x",
     "cfenv": "1.0.x",
     "cloudant": "^1.4.2",
+    "crypto": "0.0.3",
     "express": "4.12.x",
     "request": "2.69.x",
     "util": "0.10.x"
