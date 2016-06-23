@@ -68,7 +68,6 @@
         </div>
         <div class="col-md-8">
             <ul id="jobData">
-
             </ul>
         </div>
     </div>
@@ -101,11 +100,14 @@
         var ul = $('#jobData');
         searchBtn.click(function (e) {
             e.preventDefault();
+            ul.empty();
+            ul.append('<li>Loading ...</li>');
             $.ajax({
                 type : 'GET',
                 dataType : 'json',
                 url: '/jobData',
                 success : function(data) {
+                    ul.empty();
                     var d = data;
                     for(var i in d){
                         var s = '<li class="well">';

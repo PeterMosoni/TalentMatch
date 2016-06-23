@@ -3,20 +3,22 @@ $(function () {
     var loginBtn = $('#loginBtn');
     loginBtn.click(function (e) {
         e.preventDefault();
-        var inputEmail = $('#inputEmail');
-        var inputPassword = $('#inputPassword');
+        var inputEmail = $('#inputEmail').val();
+        var inputPassword = $('#inputPassword').val();
         var d = {
-            "userName":inputEmail.val(),
-            "password":inputPassword.val()
+            "userName":inputEmail,
+            "password":inputPassword
         };
         console.log(d);
         $.ajax({
             type : 'POST',
             dataType : 'json',
+            contentType:'application/json',
             url: '/login',
             data: JSON.stringify(d),
             success : function(data) {
                 console.log(data);
+                if(data.success) location.href = "frontpage.html";
             },
             error : function(xhr, status, error) {
                 console.log("Ajax error: "+ error + "<br/>" + JSON.stringify(xhr));
@@ -24,15 +26,12 @@ $(function () {
         });
     });
 
-
-
     var ul = $('#companyList');
     $.ajax({
         type : 'GET',
         dataType : 'json',
         url: '/companyData',
         success : function(data) {
-            console.log(data);
             var d = data;
             for(var i in d){
                 ul.append('<li><img src="'+d[i].value.companyLogoUrl+'"></li>');
