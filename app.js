@@ -82,6 +82,33 @@ app.get('/jobData', function(req, res) {
 	    );
 });
 
+
+//Search job by category
+app.get('/jobDataCategory', function(req, res) {
+	 request.get({
+	        url: dbURL +"/job/_design/jobs/_view/jobs",
+	        headers: {
+	            'Content-Type': 'application/json'
+	        }}, function (error, response, body) {
+	        	if ((error) || (!response.statusCode)) {
+	        		console.log("ERROR: Can't get target db's docs." +error);
+	        	}
+	        	else {
+	        		if((response.statusCode < 300)) {	        			
+	        			var resultJSON = [{}];
+	        			var results = JSON.parse(body).rows;
+	        			for(i =0; i<results.length; i++){
+	        				if(results[i].value.jobCategory == req.param('categoryName')) resultJSON.push(results[i]);
+	        			}	   
+	        			res.send(resultJSON);
+	        		} else {
+	        			console.log("We have no error, but status code is not valid: "+response.statusCode);
+	        		}
+	        	}
+	        }
+	    );
+});
+
 //LOGIN
 app.post('/login', function(req, res) {	
 	var userName = req.body.userName;
