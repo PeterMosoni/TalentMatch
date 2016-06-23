@@ -86,7 +86,7 @@ app.get('/jobData', function(req, res) {
 //Search job by category
 app.get('/jobDataCategory', function(req, res) {
 	 request.get({
-	        url: dbURL +"/job/_design/jobs/_view/jobs",
+	        url: dbURL +"/job/_design/jobs/_view/jobsOnCateg?key=\""+req.param("categoryName")+"\"",
 	        headers: {
 	            'Content-Type': 'application/json'
 	        }}, function (error, response, body) {
@@ -95,12 +95,35 @@ app.get('/jobDataCategory', function(req, res) {
 	        	}
 	        	else {
 	        		if((response.statusCode < 300)) {	        			
-	        			var resultJSON = [{}];
-	        			var results = JSON.parse(body).rows;
-	        			for(i =0; i<results.length; i++){
-	        				if(results[i].value.jobCategory == req.param('categoryName')) resultJSON.push(results[i]);
-	        			}	   
-	        			res.send(resultJSON);
+	        			var results = JSON.parse(body).rows; 
+	        			res.send(results);
+	        		} else {
+	        			console.log("We have no error, but status code is not valid: "+response.statusCode);
+	        		}
+	        	}
+	        }
+	    );
+});
+
+
+//Search job by category
+app.get('/allJobCategories', function(req, res) {
+	 request.get({
+	        url: dbURL +"/job/_design/jobs/_view/jobsOnCateg",
+	        headers: {
+	            'Content-Type': 'application/json'
+	        }}, function (error, response, body) {
+	        	if ((error) || (!response.statusCode)) {
+	        		console.log("ERROR: Can't get target db's docs." +error);
+	        	}
+	        	else {
+	        		if((response.statusCode < 300)) {	
+	        			var jsonResults = [];
+	        			var results = JSON.parse(body).rows; 
+	        			for(i=0; i<results.length; i++){
+	        				jsonResults.push({jobCategory:results[i].value.jobCategory});
+	        			}
+	        			res.send(jsonResults);
 	        		} else {
 	        			console.log("We have no error, but status code is not valid: "+response.statusCode);
 	        		}
