@@ -1,0 +1,181 @@
+/* style.css
+ * This file provides css styles.
+ */
+
+body,html {
+	background-color: #3b4b54; width : 100%;
+	height: 100%;
+	margin: 0 auto;
+	font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
+	color: #ffffff;
+}
+
+a {
+	text-decoration: none;
+	color: #00aed1;
+}
+
+a:hover {
+	text-decoration: underline;
+}
+
+h1 {
+	font-weight: bold;
+	font-size: 2em;
+}
+
+
+table {
+	width: 100%;
+	height: 100%;
+	margin: 0 auto;
+}
+
+th {
+	border-bottom: 1px solid #000;
+}
+
+th, td {
+	text-align: left;
+	padding: 2px 2px 2px 2px;
+	vertical-align: top;
+	white-space: nowrap;
+}
+
+
+
+
+#pageContainer {
+    position: fixed;
+    margin: 0px auto 0px auto;
+	padding: 0px 0px 0px 0px;
+	display: block;	
+	height: 100%;
+	width: 100%;
+}
+
+#header {
+	position: relative;
+    margin:0px auto 0px auto;
+	padding: 0px 0px 0px 0px;
+	display: block;	
+    width: 100%;
+    top: 0px;
+    height: auto;
+	text-align: center;
+}
+
+#contentContainer {
+	position: relative;
+	margin:0px auto 0px auto;
+	padding: 0px 0px 0px 0px;
+	display: block;	
+	top: 0px;
+	height: 100%;
+	width: 100%;
+}
+
+#leftSide {
+	position: absolute;
+    margin: 0px auto 0px auto;
+	padding: 0px 0px 0px 0px;
+	display: block;		
+	height: 100%;
+	width: 25%;
+}
+
+#topLeft {
+	position: relative;
+	margin:0px auto 0px auto;
+	padding: 0px 0px 0px 0px;
+	display: block;	
+	height: auto;
+	width: 100%;
+	text-align: center;
+}
+
+#fieldTree {
+	position: relative;
+    margin:0px auto 0px auto;
+	padding: 0px 0px 0px 0px;
+	display: block;		
+	width: 100%;
+	overflow : auto;
+}
+
+#rightSide {
+	position: absolute;
+    margin:0px auto 0px auto;
+	padding: 0px 0px 0px 0px;
+	display: block;	
+	top: 0px;
+	right: 0px;
+	height: 100%;
+	width: 74%;
+}
+
+#topRight {
+	position: relative;
+    margin:0px auto 0px auto;
+	padding: 5px 0px 5px 0px;
+	display: block;		
+	top: 0px;
+	width: 100%;	
+}
+
+
+#upperRight {
+	position: relative;
+    margin:0px auto 0px auto;
+	padding: 5px 0px 5px 0px;
+	display: block;		
+	top: 0px;
+	width: 100%;	
+}
+
+#middleRight {
+	position: relative;
+    margin:0px auto 0px auto;
+	padding: 5px 0px 5px 0px;
+	display: block;	
+	top: 0px;
+	width: 100%;
+}
+
+#data {
+	position: static;
+	margin:0px auto 0px auto;
+	padding: 0px 0px 0px 0px;
+	display: block;	
+	width: 98%; 
+	height: 250px;  
+	resize: none;
+}
+
+#bottomRightTitle {
+	position: relative;
+	margin:0px auto 0px auto;
+	padding: 0px 0px 0px 0px;
+	display: block;	
+	height: auto;
+	width: 100%;
+	text-align: left;
+}
+
+#bottomRight {
+	position: relative;
+    margin:0px auto 0px auto;
+	padding: 5px 0px 5px 0px;
+	display: block;	
+	height: 100%;
+	width: 100%;
+	overflow : auto;
+}
+
+.jstree-default .jstree-clicked {
+	background-color: transparent; 
+} 
+
+.jstree-default .jstree-hovered { 
+	background-color: transparent; 
+}

@@ -1,0 +1,8 @@
+<testsuites name="Mocha Unit Tests">
+<testsuite name="app.js getServiceURLTemplates" tests="4" failures="0" skipped="0" timestamp="Thu, 18 Feb 2016 09:11:02 GMT" time="0.007">
+<testcase classname="app.js getServiceURLTemplates" name="returns the correct urlTmpForEmployeeSearch for the local environment" time="0"/>
+<testcase classname="app.js getServiceURLTemplates" name="returns the correct urlTmpForOrgSearch for the local environment" time="0"/>
+<testcase classname="app.js getServiceURLTemplates" name="returns the correct urlTmpForEmployeeSearch for the none local environment" time="0"/>
+<testcase classname="app.js getServiceURLTemplates" name="returns the correct urlTmpForOrgSearch for the none local environment" time="0"/>
+</testsuite>
+</testsuites>

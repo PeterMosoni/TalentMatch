@@ -1,0 +1,31 @@
+{
+  "name": "NodejsStarterApp",
+  "version": "0.0.1",
+  "description": "A sample nodejs app for Bluemix",
+  "scripts": {
+    "start": "node app.js",
+    "test" : "./node_modules/.bin/mocha",
+    "devtest": "./node_modules/.bin/mocha --cobertura"
+  },
+  "license": "BSD-3-Clause",
+  "dependencies": {
+    "express": "4.12.x",
+    "cfenv": "1.0.x",
+    "async": "1.5.x",
+    "request": "2.69.x",
+    "util": "0.10.x"
+  },
+  "devDependencies": {
+    "chai": "^3.3.0",
+    "gulp": "^3.9.0",
+    "gulp-mocha": "^2.1.3",
+    "mocha": "^2.3.3",
+    "mocha-jenkins-reporter": "^0.1.9",
+    "jenkins-mocha":"latest",
+    "rewire": "^2.3.4"
+  },
+  "repository": {},
+  "engines": {
+    "node": "0.12.x"
+  }
+}
