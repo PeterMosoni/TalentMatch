@@ -1,4 +1,31 @@
 $(function () {
+
+    var loginBtn = $('#loginBtn');
+    loginBtn.click(function (e) {
+        e.preventDefault();
+        var inputEmail = $('#inputEmail');
+        var inputPassword = $('#inputPassword');
+        var d = {
+            "userName":inputEmail.val(),
+            "password":inputPassword.val()
+        };
+        console.log(d);
+        $.ajax({
+            type : 'POST',
+            dataType : 'json',
+            url: '/login',
+            data: JSON.stringify(d),
+            success : function(data) {
+                console.log(data);
+            },
+            error : function(xhr, status, error) {
+                console.log("Ajax error: "+ error + "<br/>" + JSON.stringify(xhr));
+            }
+        });
+    });
+
+
+
     var ul = $('#companyList');
     $.ajax({
         type : 'GET',

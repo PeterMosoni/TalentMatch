@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>Talent Match</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            padding-top: 70px;
+        }
+        img{
+            width: 55px;
+            height: 50px;
+        }
+        .inline{
+            display: inline-block;
+            margin-left: 10px;
+        }
+        ul{
+            list-style: none;
+        }
+        p{
+            margin-left: 65px;
+        }
+    </style>
+</head>
+
+<body>
+
+<nav class="navbar navbar-inverse navbar-fixed-top">
+    <div class="container">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="#">Talent Match</a>
+        </div>
+        <div id="navbar" class="collapse navbar-collapse">
+            <ul class="nav navbar-nav">
+                <li class="active"><a href="#">Home</a></li>
+                <li><a href="#about">About</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+        </div><!--/.nav-collapse -->
+    </div>
+</nav>
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-4">
+            <form action="">
+                <div class="form-group">
+                    <select class="form-control" id="allJobCategories">
+                    </select>
+                </div>
+                <div class="form-group">
+                    <button class="btn btn-primary btn-large" id="searchBtn">Search</button>
+                </div>
+            </form>
+        </div>
+        <div class="col-md-8">
+            <ul id="jobData">
+
+            </ul>
+        </div>
+    </div>
+</div><!-- /.container -->
+
+
+<!-- Bootstrap core JavaScript
+================================================== -->
+<!-- Placed at the end of the document so the pages load faster -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+<script>
+    $(function () {
+        $.ajax({
+            type : 'GET',
+            dataType : 'json',
+            url: '/allJobCategories',
+            success : function(data) {
+                var allJobCategories = $('#allJobCategories');
+                var d = data;
+                var s = '';
+                for(var i in d){
+                    s+='<option>'+d[i].jobCategory+'</option>';
+
+                }
+                allJobCategories.append(s);
+            }
+        });
+        var searchBtn = $('#searchBtn');
+        var ul = $('#jobData');
+        searchBtn.click(function (e) {
+            e.preventDefault();
+            $.ajax({
+                type : 'GET',
+                dataType : 'json',
+                url: '/jobData',
+                success : function(data) {
+                    var d = data;
+                    for(var i in d){
+                        var s = '<li class="well">';
+                        s += '<img src="'+d[i].value.jobImage+'"><h4 class="inline">'+d[i].value.jobName+'</h4><p>'+d[i].value.jobSummary+'</p></li>';
+                        ul.append(s);
+                    }
+                }
+            });
+        });
+    });
+</script>
+</body>
+</html>
