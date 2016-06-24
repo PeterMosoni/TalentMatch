@@ -322,8 +322,17 @@ function getDocsForCandidate(candidId, callback){
 	       	}
 	       	else {
 	       		if((response.statusCode < 300)) {
-	      
-	       			callback(JSON.parse(body).rows);	       			
+	       			var docData = JSON.parse(body).rows;
+	       			for(i=0; i<docData.length; i++){
+	       				var doc = docData[i].value;
+	       				var attachments = doc._attachments;
+	       				var attJSON = [];
+	       				for(key in attachments){
+	       				    attJSON.push({url:dbURL+"/documents/"+docData[i].id+"/"+key});
+	       				}
+	       				doc.attachmentLinks=attJSON;
+	       			}
+	       			callback(docData);	       			
 	       		} else {
 	       			console.log("We have no error, but status code is not valid: "+response.statusCode);
 	       		}
