@@ -45,9 +45,7 @@
         </div>
         <div id="navbar" class="collapse navbar-collapse">
             <ul class="nav navbar-nav">
-                <li class="active"><a href="#">Home</a></li>
-                <li><a href="#about">About</a></li>
-                <li><a href="#contact">Contact</a></li>
+                <li class="active"><a href="frontpage.html">Home</a></li>
             </ul>
         </div><!--/.nav-collapse -->
     </div>
@@ -89,6 +87,7 @@
                 var allJobCategories = $('#allJobCategories');
                 var d = data;
                 var s = '';
+                s+='<option>All</option>';
                 for(var i in d){
                     s+='<option>'+d[i].jobCategory+'</option>';
 
@@ -107,11 +106,12 @@
                 dataType : 'json',
                 url: '/jobData',
                 success : function(data) {
+                    console.dir(data);
                     ul.empty();
                     var d = data;
                     for(var i in d){
                         var s = '<li class="well">';
-                        s += '<img src="'+d[i].value.jobImage+'"><h4 class="inline">'+d[i].value.jobName+'</h4><p>'+d[i].value.jobSummary+'</p></li>';
+                        s += '<img src="'+d[i].value.jobImage+'"><a href="candidate.html?id='+d[i].id+'"><h4 class="inline">'+d[i].value.jobName+'</h4></a><p>'+d[i].value.jobSummary+'</p></li>';
                         ul.append(s);
                     }
                 }
