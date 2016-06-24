@@ -6,6 +6,7 @@
 // This application uses express as its web server
 // for more info, see: http://expressjs.com
 var express = require('express');
+var async = require('async');
 var session = require('express-session');
 var util = require('util');
 var request = require('request');
@@ -159,6 +160,109 @@ app.post('/login', function(req, res) {
 	});
 	
 });
+
+
+// -----------------
+
+// retrieve candidate data ordered by rating of the given job's rating
+app.post('/candidatesOnJobRating', function(req, res) {
+	var jobId = req.body.jobId;
+	getAllRatings(jobId, function(ratingArray){
+		getCandidateDataForRating(ratingArray, function(dataArray){
+			//orderData(dataArray); ???????
+			dataArray = { result: dataArray }
+			res.send(dataArray);
+		});		
+	});
+});
+
+// gets all the rating data into array of { candidateId:"", rating:0 }
+// callback(resultArray)
+function getAllRatings(jobId, callback){
+	request.get({
+        url: dbURL +"/rating/_design/allRarings/_view/allRatings",
+        headers: {
+            'Content-Type': 'application/json'
+        }}, function (error, response, body) {
+        	if ((error) || (!response.statusCode)) {
+        		console.log("ERROR: Can't get target db's docs." +error);
+        	}
+        	else {
+        		if((response.statusCode < 300)) {
+        			var results = JSON.parse(body).rows; 
+        			var res = [];
+        			for (var i = 0; i < results.length; i++){
+        				res.push(getCandidateIdAndRatingPair(jobId, results[i]));
+        			}
+        			callback(res);
+        		} else {
+        			console.log("We have no error, but status code is not valid: "+response.statusCode);
+        		}
+        	}
+        }
+    );
+}
+
+function getCandidateIdAndRatingPair(jobId, ratingDbItem){
+	var res = { candidateId:"", rating:0 };
+	res.candidateId = ratingDbItem.value.candidateId;
+	var r = 0;
+	for (var i = 0; i < ratingDbItem.value.ratings.length; i++ ){
+		if (ratingDbItem.value.ratings[i].jobId == jobId) r = ratingDbItem.value.ratings[i].rating;
+	}
+	res.rating = r;	
+	return res;
+}
+
+
+
+// gets the candidate data for all the ratings. 
+// callback(result)   result is an array of { candidateId:"", rating:0, candidate: {...} }
+function getCandidateDataForRating(ratingArray, callback){
+	async.forEachLimit(
+			ratingArray, 
+			10,  // number of threads
+			function(dataItem, readyCallback){  // request data
+				fillOneDataItemWithCandidateData(dataItem, function(){
+					readyCallback();					
+				});				
+			},
+			function(err){
+				callback(ratingArray);
+			}
+	);	
+}
+
+// fills the applicant data into the dataItem
+function fillOneDataItemWithCandidateData(dataItem, callback){
+	var url = dbURL +"/candidate/"+dataItem.candidateId;
+	request.get({
+        url: url,
+        headers: {
+            'Content-Type': 'application/json'
+        }}, function (error, response, body) {
+        	if ((error) || (!response.statusCode)) {
+        		console.log("ERROR: Can't get target db's docs." +error);
+        	}
+        	else {
+        		if((response.statusCode < 300)) {
+        			dataItem.applicant = JSON.parse(body);
+        		} else {
+        			console.log("We have no error, but status code is not valid: "+response.statusCode);
+        		}
+        	}
+        	callback();
+        }
+    );
+}
+
+
+
+//-----------------
+
+
+
+
 
 //LOGOUT
 app.get('/logout', function(req, res) {

@@ -9,7 +9,7 @@
   },
   "license": "BSD-3-Clause",
   "dependencies": {
-    "async": "1.5.x",
+    "async": "^1.5.2",
     "body-parser": "^1.15.2",
     "cfenv": "1.0.x",
     "cloudant": "^1.4.2",
