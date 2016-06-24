@@ -279,6 +279,62 @@ function orderRatingArray(dataArray){
 
 
 
+app.get('/candidate', function(req, res) {
+	var candidId = req.param("candidateId");
+	getCandidateData(candidId, function(candidData){
+		getDocsForCandidate(candidId, function(docData){
+			var resData = { candidData:candidData, docData:docData };
+			res.send(resData);
+		})
+	});
+});
+
+function getCandidateData(candidId, callback){
+	request.get({
+	       url: dbURL +"/candidate/"+candidId,
+	       headers: {
+	           'Content-Type': 'application/json'
+	       }}, 
+	       function (error, response, body) {
+	       	if ((error) || (!response.statusCode)) {
+	       		console.log("ERROR: Can't get target db's docs." +error);
+	       	}
+	       	else {
+	       		if((response.statusCode < 300)) {
+	       			callback(JSON.parse(body));	       			
+	       		} else {
+	       			console.log("We have no error, but status code is not valid: "+response.statusCode);
+	       		}
+	       	}
+	       }
+	 );
+}
+
+function getDocsForCandidate(candidId, callback){
+	request.get({
+	       url: dbURL +"/documents/_design/document/_view/document?key=\""+candidId+"\"",
+	       headers: {
+	           'Content-Type': 'application/json'
+	       }}, 
+	       function (error, response, body) {
+	       	if ((error) || (!response.statusCode)) {
+	       		console.log("ERROR: Can't get target db's docs." +error);
+	       	}
+	       	else {
+	       		if((response.statusCode < 300)) {
+	      
+	       			callback(JSON.parse(body).rows);	       			
+	       		} else {
+	       			console.log("We have no error, but status code is not valid: "+response.statusCode);
+	       		}
+	       	}
+	       }
+	 );
+} 
+
+
+
+
 
 
 //LOGOUT
